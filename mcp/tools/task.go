@@ -43,12 +43,10 @@ func (h *taskHandler) Create(ctx context.Context, req *mcp.CallToolRequest, inpu
 }
 
 func (h *taskHandler) Update(ctx context.Context, req *mcp.CallToolRequest, input UpdateTaskInput) (*mcp.CallToolResult, MessageOutput, error) {
-	now := int(time.Now().Unix())
 	updateReq := task.UpdateTaskRequest{
 		Title:       input.Title,
 		Description: input.Description,
 		Status:      input.Status,
-		UpdatedAt:   &now,
 	}
 
 	err := h.taskService.Update(input.Id, updateReq)

@@ -41,8 +41,6 @@ func (s *service) Update(id string, task UpdateTaskRequest) error {
 		Title:       task.Title,
 		Description: task.Description,
 		Status:      status,
-		CreatedAt:   task.CreatedAt,
-		UpdatedAt:   task.UpdatedAt,
 	}
 
 	return s.repo.Update(id, updatedDBTask)

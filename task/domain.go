@@ -31,8 +31,6 @@ type UpdateTaskRequest struct {
 	Title       *string
 	Description *string
 	Status      *Status
-	CreatedAt   *int
-	UpdatedAt   *int
 }
 
 func MapDBToTask(dbTask repo.Task) Task {

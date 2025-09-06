@@ -3,6 +3,7 @@ package repo
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -40,8 +41,6 @@ type UpdatedTask struct {
 	Title       *string
 	Description *string
 	Status      *string
-	CreatedAt   *int
-	UpdatedAt   *int
 }
 
 func NewTask(db *sql.DB) TaskRepo {
@@ -70,17 +69,16 @@ func (r *taskRepo) Update(id string, task UpdatedTask) error {
 			title = COALESCE(?, title),
 			description = COALESCE(?, description),
 			status = COALESCE(?, status),
-			created_at = COALESCE(?, created_at),
-			updated_at = COALESCE(?, updated_at)
+			updated_at = ?
 		WHERE id = ?
 	`
 
+	now := int(time.Now().Unix())
 	_, err := r.db.Exec(query,
 		task.Title,
 		task.Description,
 		task.Status,
-		task.CreatedAt,
-		task.UpdatedAt,
+		now,
 		id,
 	)
 	if err != nil {
