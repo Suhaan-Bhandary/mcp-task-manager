@@ -32,27 +32,27 @@ func main() {
 
 	// Tools
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "task.create",
+		Name:        "create",
 		Description: "Create a new task",
 	}, taskToolHandler.Create)
 
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "task.update",
+		Name:        "update",
 		Description: "Update an existing task",
 	}, taskToolHandler.Update)
 
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "task.list",
+		Name:        "list",
 		Description: "List all tasks",
 	}, taskToolHandler.List)
 
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "task.get",
+		Name:        "get",
 		Description: "Get a task by ID",
 	}, taskToolHandler.Get)
 
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "task.delete",
+		Name:        "delete",
 		Description: "Delete a task by ID",
 	}, taskToolHandler.Delete)
 
