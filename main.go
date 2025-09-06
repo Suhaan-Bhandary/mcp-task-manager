@@ -1,13 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"log"
 
 	"github.com/Suhaan-Bhandary/mcp-task-manager/db"
+	"github.com/Suhaan-Bhandary/mcp-task-manager/mcp/tools"
 	"github.com/Suhaan-Bhandary/mcp-task-manager/repo"
 	"github.com/Suhaan-Bhandary/mcp-task-manager/task"
 	_ "github.com/mattn/go-sqlite3"
+
+	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
 func main() {
@@ -23,6 +26,39 @@ func main() {
 
 	taskRepo := repo.NewTask(database)
 	taskService := task.NewService(taskRepo)
+	taskToolHandler := tools.NewTaskHandler(taskService)
 
-	fmt.Printf("Setup Done %#v\n", taskService)
+	server := mcp.NewServer(&mcp.Implementation{Name: "Task Manager", Version: "v1.0.0"}, nil)
+
+	// Tools
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "task.create",
+		Description: "Create a new task",
+	}, taskToolHandler.Create)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "task.update",
+		Description: "Update an existing task",
+	}, taskToolHandler.Update)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "task.list",
+		Description: "List all tasks",
+	}, taskToolHandler.List)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "task.get",
+		Description: "Get a task by ID",
+	}, taskToolHandler.Get)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "task.delete",
+		Description: "Delete a task by ID",
+	}, taskToolHandler.Delete)
+
+	log.Println("Starting MCP Server...")
+	err = server.Run(context.Background(), &mcp.StdioTransport{})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
