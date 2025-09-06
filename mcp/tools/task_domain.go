@@ -9,10 +9,10 @@ type CreateTaskInput struct {
 }
 
 type UpdateTaskInput struct {
-	Id          string       `json:"id"`
-	Title       *string      `json:"title"`
-	Description *string      `json:"description"`
-	Status      *task.Status `json:"status"`
+	Id          string       `json:"id" jsonschema:"required"`
+	Title       *string      `json:"title,omitempty"`
+	Description *string      `json:"description,omitempty"`
+	Status      *task.Status `json:"status,omitempty"`
 }
 
 type TaskIDInput struct {
