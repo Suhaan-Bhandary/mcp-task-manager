@@ -7,10 +7,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var DATABASE_FILE_NAME = "task-manager.db"
-
-func InitDB() (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", DATABASE_FILE_NAME)
+func InitDB(dbUrl string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", dbUrl)
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to DB: %s", err)
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
 
 	"github.com/Suhaan-Bhandary/mcp-task-manager/db"
@@ -14,7 +15,10 @@ import (
 )
 
 func main() {
-	database, err := db.InitDB()
+	dbUrl := flag.String("db", "task-manager.db", "url to database")
+	flag.Parse()
+
+	database, err := db.InitDB(*dbUrl)
 	if err != nil {
 		log.Fatalf("db error %s", err)
 	}
