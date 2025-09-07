@@ -60,6 +60,33 @@ func main() {
 		Description: "Delete a task by ID",
 	}, taskToolHandler.Delete)
 
+	// Predefined Prompt Template
+	var taskPrompt = &mcp.Prompt{
+		Name:        "create_task",
+		Description: "Generate a prompt to help create a well-defined task",
+		Arguments: []*mcp.PromptArgument{
+			{Name: "taskName", Required: true},
+		},
+	}
+
+	// Add the prompt handler to the server
+	server.AddPrompt(taskPrompt, func(_ context.Context, req *mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
+		taskName := req.Params.Arguments["taskName"]
+
+		return &mcp.GetPromptResult{
+			Description: "Prompt to create a good, structured task",
+			Messages: []*mcp.PromptMessage{
+				{
+					Role: "user",
+					Content: &mcp.TextContent{
+						Text: "Create a clear and actionable task for: " + taskName +
+							". Ensure it includes details, deadlines, and expected outcomes.",
+					},
+				},
+			},
+		}, nil
+	})
+
 	log.Println("Starting MCP Server...")
 	err = server.Run(context.Background(), &mcp.StdioTransport{})
 	if err != nil {
