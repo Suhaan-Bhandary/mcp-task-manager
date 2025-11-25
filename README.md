@@ -11,30 +11,6 @@ This allows LLMs (e.g., Claude) to call into your task manager using the **Model
 * Service layer for business logic
 * MCP server exposing task operations as tools
 
-## Project Structure
-
-```
-.
-├── db/                 # Database initialization and connection
-│   └── db.go
-├── mcp/                # MCP server & tool definitions
-│   └── tools/
-│       ├── domain.go
-│       ├── task_domain.go
-│       └── task.go
-├── repo/               # Repository layer (DB models & queries)
-│   └── task.go
-├── task/               # Domain + Service layer
-│   ├── domain.go
-│   └── service.go
-├── task-manager.db     # SQLite database (auto-created)
-├── main.go             # Entry point, runs MCP server
-├── go.mod
-├── go.sum
-└── README.md
-```
-
-
 ## Setup
 
 ### 1. Clone the repo
